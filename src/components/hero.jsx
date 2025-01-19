@@ -1,11 +1,12 @@
 import React from 'react';
 import { ChevronDown, ArrowRight } from 'lucide-react';
+import banner1 from '../assets/banner2.jpg';
 
 const Hero = () => (
   <div className="relative h-screen">
     <div className="absolute inset-0">
       <img
-        src="/api/placeholder/1920/1080"
+        src={banner1}
         alt="Modern Auto Workshop"
         className="w-full h-full object-cover"
       />

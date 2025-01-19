@@ -1,3 +1,10 @@
+import car from '../assets/car.jpg';
+import Ac from '../assets/Ac.jpg';
+import brake from '../assets/brake.jpg';
+import computer from '../assets/computer.jpg';
+import oil from '../assets/oil.jpg';
+import wheel from '../assets/wheel.jpg';
+import battery from '../assets/battery.jpg';
 export const services = [
     {
       id: 1,
@@ -5,7 +12,7 @@ export const services = [
       duration: '1 hour',
       price: '₦25,000',
       description: 'Complete oil change service using high-quality engine oil. Includes oil filter replacement and comprehensive inspection.',
-      image: '/api/placeholder/800/600',
+      image: oil,
       rating: '4.9',
       features: [
         'Premium synthetic oil options',
@@ -20,7 +27,7 @@ export const services = [
       duration: '2 hours',
       price: '₦45,000',
       description: 'Complete brake system service including pad replacement, disc checking, and brake fluid service.',
-      image: '/api/placeholder/800/600',
+      image: brake,
       rating: '4.8',
       features: [
         'Brake pad replacement',
@@ -35,7 +42,7 @@ export const services = [
       duration: '1 hour',
       price: '₦15,000',
       description: 'Professional wheel balancing and alignment service to ensure smooth handling and extend tire life.',
-      image: '/api/placeholder/800/600',
+      image: wheel,
       rating: '4.9',
       features: [
         'Computerized alignment',
@@ -50,7 +57,7 @@ export const services = [
       duration: '1 hour',
       price: '₦20,000',
       description: 'Advanced computer diagnostics to identify electrical and mechanical issues in your vehicle.',
-      image: '/api/placeholder/800/600',
+      image: computer,
       rating: '4.7',
       features: [
         'Full system scan',
@@ -65,7 +72,7 @@ export const services = [
       duration: '2 hours',
       price: '₦35,000',
       description: 'Complete AC system service including gas charging, cooling check, and system diagnosis.',
-      image: '/api/placeholder/800/600',
+      image: Ac,
       rating: '4.8',
       features: [
         'Gas charging',
@@ -80,7 +87,7 @@ export const services = [
       duration: '4 hours',
       price: '₦50,000',
       description: 'Premium car detailing service including interior deep cleaning and exterior polish.',
-      image: '/api/placeholder/800/600',
+      image: car,
       rating: '4.9',
       features: [
         'Interior deep clean',
@@ -95,7 +102,7 @@ export const services = [
       duration: '30 mins',
       price: '₦8,000',
       description: 'Battery health check, terminal cleaning, and water top-up for maintenance-type batteries.',
-      image: '/api/placeholder/800/600',
+      image:battery,
       rating: '4.8',
       features: [
         'Battery load test',
@@ -104,19 +111,19 @@ export const services = [
         'Charging system test'
       ]
     },
-    {
-      id: 8,
-      name: 'Suspension Check',
-      duration: '1.5 hours',
-      price: '₦30,000',
-      description: 'Complete suspension system inspection and basic repairs for improved comfort and handling.',
-      image: '/api/placeholder/800/600',
-      rating: '4.7',
-      features: [
-        'Shock absorber test',
-        'Bush inspection',
-        'Joint inspection',
-        'Free wheel alignment'
-      ]
-    }
+    // {
+    //   id: 8,
+    //   name: 'Suspension Check',
+    //   duration: '1.5 hours',
+    //   price: '₦30,000',
+    //   description: 'Complete suspension system inspection and basic repairs for improved comfort and handling.',
+    //   image: '/api/placeholder/800/600',
+    //   rating: '4.7',
+    //   features: [
+    //     'Shock absorber test',
+    //     'Bush inspection',
+    //     'Joint inspection',
+    //     'Free wheel alignment'
+    //   ]
+    // }
   ];
