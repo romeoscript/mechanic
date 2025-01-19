@@ -14,6 +14,7 @@ import AppointmentForm from './components/AppointmentForm';
 
 // Data
 import { services } from './components/services';
+import Footer from './components/Footer';
 
 const App = () => {
   const [activeTab, setActiveTab] = useState('services');
@@ -45,6 +46,8 @@ const App = () => {
           onClose={() => setShowBookingForm(false)} 
         />
       )}
+
+      <Footer/>
     </div>
   );
 };
