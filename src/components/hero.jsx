@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, MapPin, Search } from 'lucide-react';
 import banner1 from '../assets/banner1.jpg';
-import supabase from '../config/supabaseClient';
 
 const Hero = () => {
   const [location, setLocation] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [detailedLocation, setDetailedLocation] = useState('');
 
-  console.log(supabase, 'another')
+
 
   const handleGetLocation = async () => {
     if (!navigator.geolocation) {
