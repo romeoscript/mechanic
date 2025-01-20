@@ -1,55 +1,77 @@
-import React, { useState, useEffect } from 'react';
-import { ChevronDown, MapPin, Search } from 'lucide-react';
-import banner1 from '../assets/banner1.jpg';
+import React, { useState, useEffect } from "react";
+import { ChevronDown, MapPin, Search } from "lucide-react";
+import banner1 from "../assets/banner1.jpg";
+import MechanicsModal from "./MechanicsModal";
 
 const Hero = () => {
-  const [location, setLocation] = useState('');
+  const [location, setLocation] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-  const [detailedLocation, setDetailedLocation] = useState('');
+  const [detailedLocation, setDetailedLocation] = useState("");
+  const [mechanics, setMechanics] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [isLoadingMechanics, setIsLoadingMechanics] = useState(false);
 
-
+  const fetchNearbyMechanics = async (latitude, longitude) => {
+    setIsLoadingMechanics(true);
+    try {
+      const response = await fetch(
+        `http://localhost:5001/mechanics?latitude=${latitude}&longitude=${longitude}&radiusInKm=10`
+      );
+      const data = await response.json();
+      console.log(data, 'another')
+      setMechanics(data);
+      setShowModal(true);
+    } catch (error) {
+      console.error("Error fetching mechanics:", error);
+      alert("Unable to fetch nearby mechanics");
+    } finally {
+      setIsLoadingMechanics(false);
+    }
+  };
 
   const handleGetLocation = async () => {
     if (!navigator.geolocation) {
-      alert('Geolocation is not supported by your browser');
+      alert("Geolocation is not supported by your browser");
       return;
     }
-  
+
     setIsSearching(true);
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         try {
           const { latitude, longitude } = position.coords;
+          console.log(latitude, longitude, "coordinates");
 
-          console.log(latitude, longitude, 'fries');
-  
-          // Fetch detailed address using Google Maps API
           const response = await fetch(
             `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyBQcXOQ98ZheEx_5BJ5R2_n_JhBtN-ScW8`
           );
           const data = await response.json();
-  
-          if (data.status === 'OK' && data.results.length > 0) {
+
+          if (data.status === "OK" && data.results.length > 0) {
             const detailedAddress = data.results[0].formatted_address;
             setLocation(detailedAddress);
             setDetailedLocation(detailedAddress);
+            await fetchNearbyMechanics(latitude, longitude);
           } else {
-            alert('Unable to fetch the address. Try again later.');
+            alert("Unable to fetch the address. Try again later.");
           }
         } catch (error) {
-          console.error('Error:', error);
+          console.error("Error:", error);
         } finally {
           setIsSearching(false);
         }
       },
       (error) => {
-        console.error('Location error:', error);
+        console.error("Location error:", error);
         setIsSearching(false);
-        alert('Unable to retrieve your location');
+        alert("Unable to retrieve your location");
       }
     );
   };
-  
+
+  const handleSearchMechanics = () => {
+    handleGetLocation();
+  };
 
   return (
     <div className="relative h-screen">
@@ -65,12 +87,22 @@ const Hero = () => {
 
       {/* Navigation */}
       <nav className="relative z-10 flex justify-between items-center py-4 px-6">
-        <div className="text-white text-xl font-semibold">AutoCare Workshop</div>
+        <div className="text-white text-xl font-semibold">
+          AutoCare Workshop
+        </div>
         <div className="flex gap-8">
-          <a href="#services" className="text-white hover:text-blue-400">Services</a>
-          <a href="#about" className="text-white hover:text-blue-400">About</a>
-          <a href="#testimonials" className="text-white hover:text-blue-400">Testimonials</a>
-          <a href="#contact" className="text-white hover:text-blue-400">Contact</a>
+          <a href="#services" className="text-white hover:text-blue-400">
+            Services
+          </a>
+          <a href="#about" className="text-white hover:text-blue-400">
+            About
+          </a>
+          <a href="#testimonials" className="text-white hover:text-blue-400">
+            Testimonials
+          </a>
+          <a href="#contact" className="text-white hover:text-blue-400">
+            Contact
+          </a>
         </div>
       </nav>
 
@@ -79,7 +111,9 @@ const Hero = () => {
         <div className="max-w-4xl mx-auto space-y-8">
           {/* Main Text */}
           <h1 className="text-5xl md:text-7xl font-bold text-white">
-            FIND AUTO SERVICES<br />NEAR YOU
+            FIND AUTO SERVICES
+            <br />
+            NEAR YOU
           </h1>
           <p className="text-xl md:text-2xl text-white/90">
             Discover trusted mechanics and auto repair services in your area.
@@ -89,9 +123,7 @@ const Hero = () => {
 
           {/* Location Search */}
           <div className="max-w-lg space-y-3">
-            <label className="block text-white text-lg">
-              Service Location
-            </label>
+            <label className="block text-white text-lg">Service Location</label>
             <div className="flex gap-2">
               <button
                 onClick={handleGetLocation}
@@ -116,21 +148,35 @@ const Hero = () => {
               </div>
             </div>
             <button
+              onClick={handleSearchMechanics}
               className="w-full bg-white text-black py-3 rounded font-semibold
-                       hover:bg-white/90 transition-colors flex items-center justify-center gap-2"
+                 hover:bg-white/90 transition-colors flex items-center justify-center gap-2"
             >
               <Search className="w-5 h-5" />
-              SEARCH MECHANICS
+              {isSearching ? "SEARCHING..." : "SEARCH MECHANICS"}
             </button>
           </div>
+
+          <MechanicsModal
+            showModal={showModal}
+            setShowModal={setShowModal}
+            mechanics={mechanics}
+            isLoadingMechanics={isLoadingMechanics}
+          />
 
           {/* Services Tags */}
           <div>
             <p className="text-white/80 mb-2">Available services include:</p>
             <div className="flex flex-wrap gap-2">
-              {['Oil Change', 'Brake Service', 'Engine Diagnostics', 'Tire Service', 'General Repairs'].map((service) => (
-                <span 
-                  key={service} 
+              {[
+                "Oil Change",
+                "Brake Service",
+                "Engine Diagnostics",
+                "Tire Service",
+                "General Repairs",
+              ].map((service) => (
+                <span
+                  key={service}
                   className="px-4 py-1.5 bg-white/10 backdrop-blur-sm rounded-full text-white/90 text-sm"
                 >
                   {service}
