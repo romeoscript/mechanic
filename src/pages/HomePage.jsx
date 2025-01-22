@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
 
 // Layout Components
-import Navigation from "./components/Navigation";
-import Hero from "./components/hero";
+import Navigation from "../components/Navigation";
+import Hero from "../components/hero";
 
 // Section Components
-import ServicesSection from "./components/ServicesSection";
-import AboutSection from "./components/AboutSection";
-import ContactSection from "./components/ContactSection";
+import ServicesSection from "../components/ServicesSection";
+import AboutSection from "../components/AboutSection";
+import ContactSection from "../components/ContactSection";
 
 // Forms
-import AppointmentForm from "./components/AppointmentForm";
+import AppointmentForm from "../components/AppointmentForm";
 
 // Data
-import { services } from "./components/services";
-import Footer from "./components/Footer";
-import TestimonialsSection from "./components/TestimonialsSection";
+import { services } from "../components/services";
+import Footer from "../components/Footer";
+import TestimonialsSection from "../components/TestimonialsSection";
 
 const HomePage = () => {
   const [activeTab, setActiveTab] = useState("services");
